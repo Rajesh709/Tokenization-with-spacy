@@ -40,12 +40,40 @@ doc = nlp("This is the first sentence. And here is another one.")
 for sent in doc.sents:
     print(sent.text)
 
+
+
 #✅ 8. Similarity Check
-doc1 = nlp("Apple")
-doc2 = nlp("Orange")
+#
+# run this is terminal (python -m spacy download en_core_web_md)
+
+nlp = spacy.load("en_core_web_md")
+
+doc1 = nlp("BUS")
+doc2 = nlp("School Bus")
 print("Similarity:", doc1.similarity(doc2))
 
 #✅ 9. Custom Stop Word Addition
+import spacy
+from spacy.tokens import Doc
+from textblob import TextBlob
+
+# Load the spaCy model
+nlp = spacy.load("en_core_web_sm")
+
+# Register the 'polarity' extension
+
+if not Doc.has_extension("polarity"):
+    Doc.set_extension("polarity", getter=lambda doc: TextBlob(doc.text).sentiment.polarity)
+
+# Analyze text
+doc = nlp("This is an amazing product!")
+
+# Print sentiment polarity
+print("Polarity111:", doc._.polarity)
+
+doc1 = nlp("The movie was boring and terrible")
+print("polarity22222:", doc1._.polarity)
+
 from spacy.lang.en.stop_words import STOP_WORDS
 STOP_WORDS.add("amazing")
 
